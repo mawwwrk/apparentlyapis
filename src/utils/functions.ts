@@ -7,22 +7,23 @@ function doFetch() {
       method: "GET",
     }
   )
-    .then((response) => {
-      console.log("response", response);
-      return response.json();
-    })
+    .then(
+      (response) => response.json()
+      // console.log("response", response);
+    )
     .then((data) => {
       res = data;
       console.log("data", data);
+      return data;
     })
     .catch((error) => {
       console.log("error", error);
-    })
-    .finally(
+    });
+  /* .finally(
       () => {
         console.log("finally");
-      } /* finally */
-    );
+      }
+    ); */
   return res;
 }
 

@@ -3,7 +3,8 @@
 }
 
 .App-logo {
-  height: 15vmin;
+  height: 15vw;
+  margin: 1em auto;
   pointer-events: none;
 }
 
@@ -15,12 +16,14 @@
 
 .App-header {
   background-color: #282c34;
-  min-height: 15vh;
+  min-height: 7.5rem;
+  max-height: 18vmin;
   display: flex;
-  flex-direction: column;
+  flex-flow: wrap column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
+  overflow: hidden;
   color: white;
 }
 
@@ -32,6 +35,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }

@@ -19,10 +19,13 @@ parserOptions:
     jsx: true
   ecmaVersion: latest
   sourceType: module
+settings:
+  react:
+    version: detect
 plugins:
   - "@typescript-eslint"
 rules:
-  import/prefer-default-export: warn
+  import/prefer-default-export: off
   import/no-default-export: off
   import/extensions:
     - warn
@@ -41,6 +44,12 @@ rules:
     - error
     - allowShortCircuit: true
       allowTernary: true
+  unicorn/prevent-abbreviations:
+    - warn
+    - extendDefaultReplacements: true
+      replacements:
+        props:
+          properties: false
   react/prop-types:
     - off
 overrides:

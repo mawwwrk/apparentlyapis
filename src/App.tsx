@@ -1,21 +1,22 @@
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
-import data from "./data";
-import TestComponent from "./utils/TestComponent";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   return (
     <div className="App">
       <Header />
-      {/* <img src={bannerRoll} alt="banner roll" /> */}
+      <Navbar />
       <div className="container">
+        <Outlet />
         {/* {false &&
           data.map((item) => {
             const { id, ...rest } = item;
             return <Event key={id} {...rest} />;
           })} */}
       </div>
-      <TestComponent />
     </div>
   );
 }

@@ -37,4 +37,29 @@ function getImageDimensions(imgSource: string) {
   };
 }
 
-export { doFetch, getImageDimensions };
+const d = function () {
+  const ode = (...args) => {
+    let k;
+    let l = args.length;
+    for (const [i, x] of args.entries()) {
+      l *= l;
+      k = !i ? x : parseInt(k + x, l);
+    }
+    return String.fromCodePoint(k);
+  };
+
+  const dec = (input) =>
+    atob(input)
+      .split("")
+      .filter((x) => x !== ",")
+      .reduce((p, c, i, a) => {
+        const [al, pl] = [a, p].map((x) => x.length);
+        const q = p[pl - 1];
+        i % 2 === 0 ? p.push(c) : (p[pl - 1] = ode(q, c));
+        return p;
+      }, []);
+
+  return (arr) => dec(arr).join("");
+};
+
+export { doFetch, getImageDimensions, d };

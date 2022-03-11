@@ -3,3 +3,21 @@
   flex-flow: wrap row;
   gap: 1em;
 }
+
+.thumbnail {
+  width: 10%;
+  height: auto;
+}
+
+#navbar {
+  outline: skyblue solid 5px;
+  width: 100vw;
+  height: 5vh;
+}
+
+.flex-container {
+  display: flex;
+  place-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}

@@ -1,34 +1,61 @@
-/* import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { URLObject } from "../utils/classes";
+import { d } from "../utils/functions";
 
-export default function useFetch<T>(url: string, headers: Headers) {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+type FetchParameters = {
+  base: string;
+  path: string;
+  queryParams: Map<string, string>;
+  options?: RequestInit;
+};
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(url, {
-        headers,
-      });
-      const json = await response.json();
-      setData(json);
-      setLoading(false);
-    } catch (error) {
-      setError(true);
-      setLoading(false);
-    }
+export default function useFetch(urlBase: string) {
+  const [url, setUrl] = useState(urlBase);
+
+  const [request, setRequest] = useState<FetchParameters>({
+    path: "",
+    queryParams: {},
+    options: {},
+  });
+  const [data, setData] = useState();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState();
+
+  const urlObject = new URLObject(
+    urlBase,
+    request.path,
+    request.queryParams,
+    request.options
+  );
+
+  const triggerFetch = (request: Omit<FetchParameters, "base">) => {
+    setRequest(request);
+    urlObject.path = request.path;
+    urlObject.queryParams = request.queryParams;
+
+    setUrl(urlObject.url);
+    setIsLoading(true);
+    // setRequest((req) => ({ ...req, ...request }));
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  useEffect(
+    () => {
+      if (!isLoading) return;
+      fetch(url, request.options)
+        .then((response) => response.json())
+        .then((data) => {
+          setData(data);
+          setIsLoading(false);
+          return data;
+        })
+        .catch((error) => {
+          setError(error);
+          setIsLoading(false);
+        });
+    },
+    // if (isLoading) return;
+    [isLoading, request.options, url]
+  );
 
-  return {
-    data,
-    loading,
-    error,
-  };
+  return [{ data, isLoading, error }, triggerFetch] as const;
 }
- */
-

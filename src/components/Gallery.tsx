@@ -17,7 +17,7 @@ const Div = styled.div`
 export default function TestComponent() {
   const [state, setState] = useState();
   const ref = createRef();
-  const t1 = "http://gateway.marvel.com/v1/public/";
+  const t1 = "https://gateway.marvel.com/v1/public/";
   const [options, setOptions] = useState({
     path: "series",
     options: {

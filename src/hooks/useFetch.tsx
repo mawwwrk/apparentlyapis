@@ -36,7 +36,6 @@ export default function useFetch(urlBase: string) {
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
-          referer: "http://localhost:3000",
         },
       };
 

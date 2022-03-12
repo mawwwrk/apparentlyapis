@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SetStateAction, useEffect, useRef, useState } from "react";
 
 function checkCache() {

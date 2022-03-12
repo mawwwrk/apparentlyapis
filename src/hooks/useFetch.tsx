@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useEffect, useState } from "react";
 import { URLObject } from "../utils/classes";
 import { d } from "../utils/functions";
@@ -44,6 +46,7 @@ export default function useFetch(urlBase: string) {
     urlObject.queryParams = request?.queryParams ?? { limit: 50 };
 
     setUrl(urlObject.url);
+    console.log(urlObject.url);
     setIsLoading(true);
     // setRequest((req) => ({ ...req, ...request }));
   };

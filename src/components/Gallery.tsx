@@ -1,18 +1,20 @@
+// @ts-nocheck
 import { createRef, useEffect, useState } from "react";
 import styled from "styled-components";
-import { Card } from "./Card";
-import CardRoll from "./CardRoll";
-import Modal from "./Modal";
+import { Card } from "../components/Card";
+import CardRoll from "../components/CardRoll";
+import Modal from "../components/Modal";
 import useFetch from "../hooks/useFetch";
 
 const Div = styled.div`
+  outline: hotpink solid 5px;
   height: fit-content;
   width: 95%;
   display: flex;
   justify-content: center;
 `;
 
-export default function Gallery() {
+export default function TestComponent() {
   const [state, setState] = useState();
   const ref = createRef();
   const t1 = "http://gateway.marvel.com/v1/public/";
@@ -32,21 +34,27 @@ export default function Gallery() {
   const [res, trigger] = useFetch(t1);
   const { data, isLoading, error: errMsg } = res;
 
-  const handleClick = (cardData) => {
+  const showModal = (cardData) => {
     ref.current.showModal();
     setSpotlight((x) => cardData);
-    const path = /(?<=public\/)\S+(?=\?|$|")/.exec(spotlight?.resourceURI)?.[0];
-    if (path) {
-      setOptions((base) => {
-        return {
-          ...base,
-          path,
-          queryParams: { limit: 20 },
-        };
-      });
-      // trigger(options);
-    }
   };
+
+  const handleClick = (cardData) => {
+    cardData ? showModal(cardData) : console.log(cardData);
+  };
+
+  // const path = /(?<=public\/)\S+(?=\?|$|")/.exec(spotlight?.resourceURI)?.[0];
+  // if (path) {
+  //   setOptions((base) => {
+  //     return {
+  //       ...base,
+  //       path,
+  //       queryParams: { limit: 20 },
+  //     };
+  //   });
+  //   // trigger(options);
+  // }
+
   useEffect(() => {
     trigger(options);
     const res = data?.data?.results ?? data?.results;
@@ -58,6 +66,7 @@ export default function Gallery() {
       );
     setState((_) => res);
   }, [options]);
+  console.log(state);
 
   return (
     <>

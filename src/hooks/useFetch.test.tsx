@@ -1,3 +1,4 @@
+//@ts-nocheck
 import * as _something from "./testFetch";
 
 describe("my data fetching hook", () => {

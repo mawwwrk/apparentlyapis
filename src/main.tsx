@@ -10,10 +10,10 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<App />}>
+        <Route path="/apparentlyapis/" element={<App />}>
           <Route index element={<Gallery />} />
-          <Route path="/:page" element={<Gallery />} />
-          <Route path="/test" element={<TestComponent />} />
+          <Route path="/apparentlyapis/:page" element={<Gallery />} />
+          <Route path="/apparentlyapis/test" element={<TestComponent />} />
         </Route>
       </Routes>
     </BrowserRouter>

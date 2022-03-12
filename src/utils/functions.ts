@@ -1,3 +1,12 @@
+// @ts-nocheck
+import MD5 from "crypto-js/md5";
+const closure1 = (k) => {
+  return (p) => (t) => MD5(t, k, p);
+};
+
+const key = import.meta.env.VITE_MCAPI_P_KEY;
+const makeHash = closure1(key);
+
 function doFetch() {
   let response;
   fetch(
@@ -62,4 +71,4 @@ const d = function () {
   return (arr) => dec(arr).join("");
 };
 
-export { doFetch, getImageDimensions, d };
+export { doFetch, getImageDimensions, d, makeHash };

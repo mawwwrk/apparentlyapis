@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { createRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Card } from "../components/Card";
@@ -38,21 +39,21 @@ export default function TestComponent() {
     setSpotlight((x) => cardData);
   };
 
-  const handleClick = (props) => {
-    props.cardData ? showModal(props.cardData) : console.log(props.cardData);
+  const handleClick = (cardData) => {
+    cardData ? showModal(cardData) : console.log(cardData);
   };
 
-  const path = /(?<=public\/)\S+(?=\?|$|")/.exec(spotlight?.resourceURI)?.[0];
-  if (path) {
-    setOptions((base) => {
-      return {
-        ...base,
-        path,
-        queryParams: { limit: 20 },
-      };
-    });
-    // trigger(options);
-  }
+  // const path = /(?<=public\/)\S+(?=\?|$|")/.exec(spotlight?.resourceURI)?.[0];
+  // if (path) {
+  //   setOptions((base) => {
+  //     return {
+  //       ...base,
+  //       path,
+  //       queryParams: { limit: 20 },
+  //     };
+  //   });
+  //   // trigger(options);
+  // }
 
   useEffect(() => {
     trigger(options);
@@ -65,6 +66,7 @@ export default function TestComponent() {
       );
     setState((_) => res);
   }, [options]);
+  console.log(state);
 
   return (
     <>

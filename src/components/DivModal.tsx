@@ -1,3 +1,4 @@
+// @ts-nocheck
 import styled from "styled-components";
 import bg from "../assets/avbg.png";
 const FixedBG = styled.div.attrs((props) => {

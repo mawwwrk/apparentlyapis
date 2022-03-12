@@ -1,10 +1,12 @@
-import { d } from "./functions";
+// @ts-nocheck
+import { d, makeHash } from "./functions";
 
 class URLBase {
   static #key = {
     string: import.meta.env.VITE_MCAPI_API_KEY,
     key: d(),
   };
+  #hasher: (ts) => string;
   #queryMap: Map<string, string>;
   private _queryParams: Map<string, string> | undefined;
   constructor(public base: string) {
@@ -12,6 +14,10 @@ class URLBase {
     this.#queryMap = new Map([
       ["apikey", URLBase.#key.key(URLBase.#key.string)],
     ]);
+    this.#hasher = makeHash(URLBase.#key.key(URLBase.#key.string));
+  }
+  makeHash(ts) {
+    return this.#hasher(ts);
   }
 
   set queryParams(args) {
@@ -45,6 +51,7 @@ class URLObject extends URLBase {
     this.path = path;
   }
   get url() {
+    this.queryParams?.set("hash", this.makeHash(new Date().getTime()));
     if (this.path) {
       const url = new URL(this.path, this.base);
       if (this.queryParams) {

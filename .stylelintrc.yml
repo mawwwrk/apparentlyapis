@@ -1,8 +1,8 @@
 extends:
   - stylelint-config-standard
   - stylelint-config-prettier
-customSyntax:
-  - postcss-scss
+# customSyntax:
+#   - postcss-scss
 # overrides:
 #   - files:
 #       - "**/*.tsx"

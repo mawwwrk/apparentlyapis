@@ -4,14 +4,15 @@ import App from "./App";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import React from "react";
 import TestComponent from "./utils/TestComponent";
-import RollDisplayer from "./components/Card/RollDisplayer";
+import Gallery from "./components/Gallery";
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<RollDisplayer />} />
+          <Route index element={<Gallery />} />
+          <Route path="/:page" element={<Gallery />} />
           <Route path="/test" element={<TestComponent />} />
         </Route>
       </Routes>

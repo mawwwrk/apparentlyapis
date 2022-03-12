@@ -5,7 +5,7 @@ import { d } from "../utils/functions";
 type FetchParameters = {
   base: string;
   path: string;
-  queryParams: Map<string, string>;
+  queryParams: { [key: string]: string } | { [key: number]: string };
   options?: RequestInit;
 };
 
@@ -29,9 +29,19 @@ export default function useFetch(urlBase: string) {
   );
 
   const triggerFetch = (request: Omit<FetchParameters, "base">) => {
+    if (!request?.options)
+      request.options = {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          referer: "http://localhost:3000",
+        },
+      };
+
     setRequest(request);
-    urlObject.path = request.path;
-    urlObject.queryParams = request.queryParams;
+
+    urlObject.path = request?.path ?? "";
+    urlObject.queryParams = request?.queryParams ?? { limit: 50 };
 
     setUrl(urlObject.url);
     setIsLoading(true);

@@ -13,7 +13,7 @@ type FetchParameters = {
 
 export default function useFetch(urlBase: string) {
   const [url, setUrl] = useState(urlBase);
-
+  const [cache, setCache] = useState<any>();
   const [request, setRequest] = useState<FetchParameters>({
     path: "",
     queryParams: {},
@@ -45,29 +45,29 @@ export default function useFetch(urlBase: string) {
     urlObject.queryParams = request?.queryParams ?? { limit: 50 };
 
     setUrl(urlObject.url);
-    console.log(urlObject.url);
     setIsLoading(true);
     // setRequest((req) => ({ ...req, ...request }));
   };
 
-  useEffect(
-    () => {
-      if (!isLoading) return;
-      fetch(url, request.options)
-        .then((response) => response.json())
-        .then((data) => {
-          setData(data);
-          setIsLoading(false);
-          return data;
-        })
-        .catch((error) => {
-          setError(error);
-          setIsLoading(false);
-        });
-    },
-    // if (isLoading) return;
-    [isLoading, request.options, url]
-  );
+  useEffect(() => {
+    if (!isLoading) return;
+
+    fetch(url, request.options)
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+        setIsLoading(false);
+        return data;
+      })
+      .catch((error) => {
+        setError(error);
+        setIsLoading(false);
+      });
+  }, [url, request]);
+
+  // if (isLoading) return;
+
+  // [isLoading, request.options, url]
 
   return [{ data, isLoading, error }, triggerFetch] as const;
 }

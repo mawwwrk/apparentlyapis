@@ -1,18 +1,9 @@
 // @ts-nocheck
 import { createRef, useEffect, useState } from "react";
-import styled from "styled-components";
 import { Card } from "../components/Card";
 import CardRoll from "../components/CardRoll";
 import Modal from "../components/Modal";
 import useFetch from "../hooks/useFetch";
-
-const Div = styled.div`
-  outline: hotpink solid 5px;
-  height: fit-content;
-  width: 95%;
-  display: flex;
-  justify-content: center;
-`;
 
 export default function TestComponent() {
   const [state, setState] = useState();
@@ -66,20 +57,17 @@ export default function TestComponent() {
       );
     setState((_) => res);
   }, [options]);
-  console.log(state);
 
   return (
     <>
-      <Div>
-        {isLoading && "loading"}
-        {state && (
-          <CardRoll
-            data={state}
-            header="title"
-            propsClickHandler={handleClick}
-          />
-        )}
-      </Div>
+      {isLoading ? (
+        "loading"
+      ) : state && Array.isArray(state) ? (
+        <CardRoll data={state} header="title" propsClickHandler={handleClick} />
+      ) : (
+        Array.isArray(state) || ""
+      )}
+
       <Modal ref={ref}>
         <Card
           variant={"/landscape_incredible"}

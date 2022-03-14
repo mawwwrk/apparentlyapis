@@ -1,73 +1,41 @@
-// @ts-nocheck
+import { useEffect, useRef, useState } from "react";
+import { RefCache, ApiResponseType } from "../utils/datatypes";
 
-import { useEffect, useState } from "react";
-import { URLObject } from "../utils/classes";
-import { d } from "../utils/functions";
-
-type FetchParameters = {
-  base: string;
-  path: string;
-  queryParams: { [key: string]: string } | { [key: number]: string };
-  options?: RequestInit;
-};
-
-export default function useFetch(urlBase: string) {
-  const [url, setUrl] = useState(urlBase);
-  const [cache, setCache] = useState<any>();
-  const [request, setRequest] = useState<FetchParameters>({
-    path: "",
-    queryParams: {},
-    options: {},
-  });
-  const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState();
-
-  const urlObject = new URLObject(
-    urlBase,
-    request.path,
-    request.queryParams,
-    request.options
-  );
-
-  const triggerFetch = (request: Omit<FetchParameters, "base">) => {
-    if (!request?.options)
-      request.options = {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      };
-
-    setRequest(request);
-
-    urlObject.path = request?.path ?? "";
-    urlObject.queryParams = request?.queryParams ?? { limit: 50 };
-
-    setUrl(urlObject.url);
-    setIsLoading(true);
-    // setRequest((req) => ({ ...req, ...request }));
-  };
-
+export default function useFetch(url: keyof RefCache) {
+  const [data, setData] = useState<ApiResponseType>();
+  const [status, setStatus] = useState("idle");
+  const cache = useRef<RefCache>({});
   useEffect(() => {
-    if (!isLoading) return;
-
-    fetch(url, request.options)
-      .then((response) => response.json())
-      .then((data) => {
-        setData(data);
-        setIsLoading(false);
-        return data;
-      })
-      .catch((error) => {
-        setError(error);
-        setIsLoading(false);
-      });
-  }, [url, request]);
-
-  // if (isLoading) return;
-
-  // [isLoading, request.options, url]
-
-  return [{ data, isLoading, error }, triggerFetch] as const;
+    let isActive = true;
+    const fetchData = async () => {
+      setStatus("pending");
+      try {
+        if (cache.current && url in cache.current) {
+          if (isActive) {
+            setData(cache.current[url]);
+            setStatus("resolved");
+          }
+        } else {
+          const response = await fetch(url as string, {
+            referrer: "developer.marvel.com",
+            method: "GET",
+          });
+          const responseBody = await response.json();
+          cache.current[url] = responseBody;
+          if (isActive) {
+            setData(responseBody);
+            setStatus("fetched");
+          }
+        }
+      } catch (error) {
+        console.log(error);
+        if (isActive) setStatus("rejected");
+      }
+    };
+    fetchData();
+    return () => {
+      isActive = false;
+    };
+  }, [url]);
+  return { data, status };
 }

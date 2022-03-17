@@ -5,8 +5,8 @@ export default function Navbar() {
       <Link to="/apparentlyapis/characters">
         <h5>Characters</h5>
       </Link>
-      <Link to="/apparentlyapis/stories">
-        <h5> Stories</h5>
+      <Link to="/apparentlyapis/series">
+        <h5> Series</h5>
       </Link>
       <Link to="/apparentlyapis/events">
         <h5>Events</h5>

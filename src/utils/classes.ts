@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { APIPaths, MarvelCategories, Paths } from "./types";
 
 interface MarvelFetchRequest {

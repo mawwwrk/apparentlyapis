@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { AllEndpoints, StringPartial } from "./types";
 
 function apiSecret() {

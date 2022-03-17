@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { createRef, useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled, { css } from "styled-components";
 import { Card } from "../components/Card";
@@ -43,15 +43,15 @@ const StyledP = styled.p`
 const StyledDiv = styled.div`
   transition: all 1s ease-in-out;
 `;
-export default function TestComponent() {
+export default function Gallery() {
   const params = useParams();
   // const base = urlString(params.page);
-  const endpoint = params.page || "series";
+  const endpoint = params.page || "events";
   const base = urlString(endpoint);
 
   const [url, setUrl] = useState<string>(base);
   const [page, setPage] = useState<number>(0);
-  const modalRef = useRef();
+  const modalRef = createRef();
   const observer = useRef();
   const [highlight, setHighlight] = useState();
 
@@ -76,14 +76,17 @@ export default function TestComponent() {
 
   useEffect(() => {
     setPage((n) => 0);
+    setUrl((u) => urlString(endpoint));
     return () => {
       // second;
     };
   }, [endpoint]);
-
-  const handleClick = () => {
-    console.log("clicked");
-    setPage((pg) => pg + 1);
+  const showModal = (cardData) => {
+    setHighlight((x) => cardData);
+    modalRef.current.showModal();
+  };
+  const handleClick = (cardData) => {
+    cardData ? showModal(cardData) : console.log(cardData);
   };
 
   return (
@@ -99,18 +102,18 @@ export default function TestComponent() {
                 key={info.resourceURI}
                 data={info}
                 variant="/portrait_incredible"
-                onClick={() => {
-                  setHighlight(info);
-                  modalRef.current.showModal();
-                }}
+                propsClickHandler={handleClick}
               />
             )
           )}
       </GridContainer>
       <Modal ref={modalRef}>
-        {highlight ? (
-          <Card data={highlight} variant="/landscape_incredible" />
-        ) : null}
+        <Card
+          data={highlight}
+          variant="/landscape_incredible"
+          isModalChild={true}
+          showText={true}
+        />
       </Modal>
     </>
   );

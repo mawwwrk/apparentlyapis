@@ -23,7 +23,6 @@ export default function useMarvelAPI(url, page) {
   };
 
   useEffect(() => {
-    if (page === 1) setResults([]);
     const _url = appendQuery(url, query);
     const doFetch = async () => {
       try {
@@ -38,7 +37,7 @@ export default function useMarvelAPI(url, page) {
         setData(json);
         setIsLoading(false);
         setIsError(false);
-        setResults([...results, ...json.data.results]);
+        setResults(r => [...(page === 0 ? [] : r), ...json.data.results]);
         setHasMore(json.data.total > results.length + limit.current);
       } catch (error) {
         setIsError(true);

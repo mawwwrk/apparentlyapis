@@ -31,7 +31,7 @@
     "@typescript-eslint/eslint-plugin": "^5.14.0",
     "@typescript-eslint/parser": "^5.14.0",
     "@vitejs/plugin-react": "^1.2.0",
-    "eslint": "^8.10.0",
+    "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-html": "^6.2.0",
@@ -50,7 +50,6 @@
     "jest": "^27.5.1",
     "jest-extended": "^2.0.0",
     "postcss": "^8.4.8",
-    "postcss-js": "^4.0.0",
     "postcss-nested": "^5.0.6",
     "postcss-preset-env": "^7.4.2",
     "postcss-scss": "^4.0.3",
@@ -62,12 +61,13 @@
     "stylelint": "^14.5.3",
     "stylelint-config-prettier": "^9.0.3",
     "stylelint-config-standard": "^24.0.0",
-    "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.10.0",
     "typescript": "^4.6.2",
-    "vite": "^2.8.6"
+    "vite": "^2.8.6",
+    "vite-plugin-babel-macros": "^1.0.5"
   },
   "optionalDependencies": {
-    "koa": "^2.13.4"
+    "express": "^4.17.3",
+    "koa": "^2.13.4",
+    "undici": "^4.15.1"
   }
 }

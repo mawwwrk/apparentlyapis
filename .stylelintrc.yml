@@ -1,6 +1,9 @@
 extends:
   - stylelint-config-standard
   - stylelint-config-prettier
+rules:
+  selector-class-pattern: ^[A-Z]?([a-z]\-?)+$
+  keyframes-name-pattern: ^[A-Z]?([a-z]\-?)+$
 # customSyntax:
 #   - postcss-scss
 # overrides:
@@ -8,6 +11,3 @@ extends:
 #       - "**/*.tsx"
 #       - "**/*.jsx"
 #     customSyntax: "@stylelint/postcss-css-in-js"
-rules:
-  selector-class-pattern: ^[A-Z]?([a-z]\-?)+$
-  keyframes-name-pattern: ^[A-Z]?([a-z]\-?)+$

@@ -1,0 +1,118 @@
+root: true
+env:
+  browser: true
+  es2021: true
+extends:
+  - plugin:react/recommended
+  - plugin:react-hooks/recommended
+  - plugin:jsx-a11y/recommended
+  - plugin:react/jsx-runtime
+  - plugin:import/recommended
+  - plugin:import/typescript
+  - plugin:promise/recommended
+  - plugin:unicorn/recommended
+  - plugin:eslint-comments/recommended
+  - plugin:jsonc/recommended-with-jsonc
+  - plugin:yml/standard
+  - plugin:yml/prettier
+  - plugin:@typescript-eslint/recommended
+  - prettier
+parser: "@typescript-eslint/parser"
+parserOptions:
+  ecmaFeatures:
+    jsx: true
+  ecmaVersion: latest
+  sourceType: module
+settings:
+  react:
+    version: detect
+plugins: ["@typescript-eslint", html]
+rules:
+  import/prefer-default-export: off
+  import/no-default-export: off
+  import/extensions:
+    - warn
+    - js: never
+      ts: never
+      jsx: never
+      tsx: never
+  unicorn/filename-case:
+    - error
+    - cases:
+        camelCase: true
+        pascalCase: true
+        kebabCase: true
+  react/destructuring-assignment: off
+  "@typescript-eslint/no-unused-expressions":
+    - error
+    - allowShortCircuit: true
+      allowTernary: true
+  eslint-comments/no-unlimited-disable: off # ? duplicate of unicorn/no-abusive-eslint-disable
+  # TODO: revisit this
+  unicorn/prevent-abbreviations:
+    - off
+  react/prop-types:
+    - off
+  "@typescript-eslint/no-unused-vars":
+    - error
+    - caughtErrors: none
+  unicorn/prefer-spread: off
+overrides:
+  - files: ["*.json", "*.json5"]
+    parser: jsonc-eslint-parser
+    rules:
+      comma-dangle:
+        - error
+        - never
+      quote-props:
+        - error
+        - always
+      quotes:
+        - error
+        - double
+  - files: ["*.yaml", "*.yml"]
+    parser: yaml-eslint-parser
+  - files:
+      - package.json
+    parser: jsonc-eslint-parser
+    rules:
+      jsonc/sort-keys:
+        - error
+        - order:
+            - name
+            - version
+            - description
+            - keywords
+            - license
+            - repository
+            - funding
+            - author
+            - type
+            - files
+            - exports
+            - main
+            - module
+            - unpkg
+            - bin
+            - scripts
+            - husky
+            - lint-staged
+            - peerDependencies
+            - peerDependenciesMeta
+            - dependencies
+            - devDependencies
+            - eslintConfig
+          pathPattern: ^$
+        - order:
+            type: asc
+          pathPattern: ^(?:dev|peer|optional|bundled)?[Dd]ependencies$
+  - files: ["*.test.ts", "*.test.tsx", "*.test.js", "*.test.jsx"]
+    extends:
+      - plugin:jest/recommended
+      - plugin:jest/style
+      - plugin:testing-library/react
+    plugins: [jest-dom]
+  - files: [./*.config.*]
+    rules:
+      unicorn/prefer-module: off
+      "@typescript-eslint/no-var-requires": warn

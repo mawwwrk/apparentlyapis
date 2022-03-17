@@ -40,12 +40,12 @@ function Card(
   try {
     src = `${data.thumbnail.path}${picVariant}.${data.thumbnail.extension}`;
   } catch {
-    console.error("no src");
+    console.debug("no src");
     src = undefined;
   }
 
   return (
-    <div className="card" onClick={handleClick}>
+    <div className="card" onClick={handleClick} aria-hidden="true">
       <h2>{showText && header}</h2>
       {src && <img className="thumbnail" src={src} alt="" />}
       <p>{description !== undefined && showText && description}</p>

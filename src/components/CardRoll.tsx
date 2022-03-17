@@ -24,15 +24,11 @@ const DivElement = (props) => {
 };
 
 export default function CardRoll(props) {
-  const { data, propsClickHandler } = props;
+  const { data, propsClickHandler, children } = props;
   const columns = Math.floor((window.innerWidth * 0.8) / 100);
   return (
     <DivElement className="card-container" cols={columns}>
-      {data
-        ? data.map((ea) => (
-            <Card key={ea.id} data={ea} propsClickHandler={propsClickHandler} />
-          ))
-        : ""}
+      {children}
     </DivElement>
   );
 }

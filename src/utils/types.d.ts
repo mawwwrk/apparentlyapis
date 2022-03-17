@@ -82,6 +82,6 @@ type EndpointDefinition<
     : never
   : never;
 
-export type MarvelResponse<P extends string> = P extends StringPartial
+export type MarvelResponse<P extends string = 'series'> = P extends StringPartial
   ? EndpointDefinition<EndpointSplitter<P>>
   : EndpointDefinition<P>;

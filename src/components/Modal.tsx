@@ -1,6 +1,4 @@
-// @ts-nocheck
-import { forwardRef } from "react";
-
+import { createRef, forwardRef, useRef } from "react";
 import styled from "styled-components";
 import bg from "../assets/avbg.png";
 
@@ -31,9 +29,9 @@ const Dialog = styled.dialog.attrs((props) => {
 `;
 
 const Modal = forwardRef(function Modal(props, ref) {
-  const { children } = props;
+  const { children, open } = props;
   return (
-    <Dialog className="Modal" ref={ref}>
+    <Dialog className="Modal" ref={ref} open={open}>
       {children}
     </Dialog>
   );

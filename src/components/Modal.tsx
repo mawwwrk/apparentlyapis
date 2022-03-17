@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { createRef, forwardRef, useRef } from "react";
 import styled from "styled-components";
 import bg from "../assets/avbg.png";
